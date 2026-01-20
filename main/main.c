@@ -1,3 +1,9 @@
+/*Heidi Garcia 
+1/19/2026
+The following code allows for an LED to be turned on every other time the button has been pressed. 
+You will need an LED, a button, ESP32 board, resistor for the LED and for the buttons is you choose to have an external pullup or pull down.
+*/
+
 #include "freertos/FreeRTOS.h"
 #include "driver/gpio.h"
 
