@@ -9,6 +9,7 @@ You will need an LED, a button, ESP32 board, resistor for the LED and for the bu
 
 #define LED_PIN GPIO_NUM_10     // Choose your LED pin
 #define BUTTON_PIN GPIO_NUM_11    // Choose your button pin
+#define BUTTON_PIN2 GPIO_NUM_12 
 
 void app_main(void) {
 
@@ -25,11 +26,17 @@ void app_main(void) {
     gpio_intr_disable(BUTTON_PIN);
     //gpio_set_level(BUTTON_PIN, 1);
 
+    gpio_reset_pin(BUTTON_PIN2);
+    gpio_set_direction(BUTTON_PIN2, GPIO_MODE_INPUT);
+    gpio_pullup_dis(BUTTON_PIN2);
+    gpio_intr_disable(BUTTON_PIN2);
+
     // TO-DO: Configure LED output
     // TO-DO: Configure Button input
     bool BUTTON_STATE = false;
     bool LED_STATE = false;
     bool GPIO_STATE; 
+    bool GPIO_STATE2; 
 
     
 
@@ -37,13 +44,16 @@ void app_main(void) {
 
     while (1) {
          GPIO_STATE = gpio_get_level(BUTTON_PIN) == 0;
+         GPIO_STATE2 = gpio_get_level(BUTTON_PIN2) == 0;
 
-        if (!BUTTON_STATE && GPIO_STATE) {
+        if (!BUTTON_STATE && GPIO_STATE && GPIO_STATE2) {
             BUTTON_STATE = true;
             LED_STATE = !LED_STATE;
 
             if (LED_STATE) {
                 gpio_set_level(LED_PIN, 1);
+            } else {
+                gpio_set_level(LED_PIN, 0);
             }
         } 
 
